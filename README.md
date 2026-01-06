@@ -24,11 +24,6 @@ arXiv: https://arxiv.org/abs/1706.03762
 </p>
 
 ---
-
-## Overview
-- This repository provides a PyTorch implementation of the core components of the Transformer, based on Attention Is All You Need (Vaswani et al., 2017).
----
-
 ## Step 1. DataSet
 
 ```python
