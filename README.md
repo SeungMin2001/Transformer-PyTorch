@@ -221,7 +221,7 @@ device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
 loader = DataLoader(res, batch_size=128, shuffle=True, collate_fn=collate_fn)
-epoch=3
+epoch=100
 train_loss=[]
 
 optimizer=torch.optim.Adam(
@@ -262,10 +262,11 @@ for _ in range(epoch):
     loss.backward()
     optimizer.step()
 
-    train_loss.append(loss.item())
+    #train_loss.append(loss.item())
+    total_loss+=loss.item()
 
-  #avg_loss=total_loss/len(loader)
-  #train_loss.append(avg_loss)
+  avg_loss=total_loss/len(loader)
+  train_loss.append(avg_loss)
 
 ```
 
