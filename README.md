@@ -22,6 +22,7 @@ arXiv: https://arxiv.org/abs/1706.03762
 <p align="left">
   <em>Figure. Transformer Architecture</em>
 </p>
+<br>
 
 ---
 ## Step 1. Dataset
@@ -36,7 +37,9 @@ test=data['test']
 train_en=train['en']
 train_de=train['de']
 ```
+<br>
 
+---
 ## Step 2. Tokenizer
 I use Hugging Face Transformers – AutoTokenizer
 
@@ -67,6 +70,9 @@ def collate_fn(batch):
 res=[k for k in train]
 ```
 <br>
+
+---
+## Step 2. Embedding
 
 <p align="left">
   <img src="assets/embedding.jpg" alt="Transformer Architecture" width="550">
@@ -102,6 +108,7 @@ class TokenEmbedding(nn.Module):
 ```
 <br>
 
+---
 ## Step 3. Attention
 
 <p align="left">
@@ -156,6 +163,9 @@ class Attention(nn.Module):
     #Add & Norm
     return self.norm(query+self.dropout(O))
 ```
+<br>
+
+---
 
 ## Step 4. FFW
 
@@ -190,6 +200,9 @@ class FeedForward(nn.Module):
 
     return x
 ```
+<br>
+
+---
 
 ## Step 5. modeling
 nx=6 in paper <br>
@@ -247,6 +260,9 @@ class transformer(nn.Module):
     last=self.out_proj(start_decoding)
     return last
 ```
+<br>
+
+---
 
 ## Step 6. Run
 
@@ -305,6 +321,9 @@ for _ in range(epoch):
   train_loss.append(avg_loss)
 
 ```
+<br>
+
+---
 
 ## Step 7. result
 ### traing loss curve is
