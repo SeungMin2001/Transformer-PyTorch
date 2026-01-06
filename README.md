@@ -104,7 +104,7 @@ class TokenEmbedding(nn.Module):
 ## Step 3. Attention
 
 <p align="left">
-  <img src="assets/attention.jpg" alt="Transformer Architecture" width="350">
+  <img src="assets/attention.png" alt="Transformer Architecture" width="350">
 </p>
 <br>
 
@@ -157,6 +157,11 @@ class Attention(nn.Module):
 ```
 
 ## Step 4. FFW
+
+<p align="left">
+  <img src="assets/FFW.png" alt="Transformer Architecture" width="350">
+</p><br>
+
 FeedForward 512->2048->512 <br>
 I use ReLU of activate function
 
