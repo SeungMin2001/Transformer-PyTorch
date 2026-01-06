@@ -1,12 +1,12 @@
 # Transformer (PyTorch)
 > **Attention Is All You Need** 논문을 기반으로 Transformer를 PyTorch로 처음부터 구현 <br>
 > A PyTorch implementation of the Transformer built from scratch, based on **Attention Is All You Need**.
-
-<p align="center">
+<br>
+<p align="left">
   <img src="transformer_architecture.jpg" alt="Transformer Architecture" width="350">
 </p>
 
-<p align="center">
+<p align="left">
   <em>Figure. Transformer Architecture</em>
 </p>
 
