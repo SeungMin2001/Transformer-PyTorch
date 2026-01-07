@@ -9,7 +9,6 @@
   <em>Figure. Transformer Architecture</em>
 </p>
 
-<br>
 
 ## Paper Reference
 
@@ -21,9 +20,6 @@ This implementation is based on the following paper:
 > *Advances in Neural Information Processing Systems (NeurIPS), 2017*
 
 arXiv: https://arxiv.org/abs/1706.03762
-<br>
-
-
 <br>
 
 ---
