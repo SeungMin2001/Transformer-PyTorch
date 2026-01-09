@@ -277,7 +277,7 @@ test_loader = DataLoader(test, batch_size=128, shuffle=False, collate_fn=collate
 device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
-epoch=10
+epoch=50
 train_loss=[]
 valid_loss=[]
 v_loss=[]
@@ -323,11 +323,11 @@ for i in range(epoch):
     loss.backward()
     optimizer.step()
 
-    train_loss.append(loss.item())
-    #total_loss+=loss.item()
+    #train_loss.append(loss.item())
+    total_loss+=loss.item()
 
-  #avg_loss=total_loss/len(loader)
-  #train_loss.append(avg_loss)
+  avg_loss=total_loss/len(loader)
+  train_loss.append(avg_loss)
 
   v_loss.append(eval_loss(model, valid_loader, criterion, vocab_size, device, pad_id=0))
   #valid_loss.append(v_loss)
@@ -360,11 +360,11 @@ def eval_loss(model, loader, criterion, vocab_size, device, pad_id=0):
                 logits.reshape(-1, vocab_size),
                 tgt_out.reshape(-1)
             )
-            #total_loss += loss.item()
-            valid_loss.append(loss.item())
+            total_loss += loss.item()
+            #valid_loss.append(loss.item())
 
-    #avg_loss = total_loss / len(loader)
-    return valid_loss
+    avg_loss = total_loss / len(loader)
+    return avg_loss
 ```
 <br>
 
@@ -376,6 +376,5 @@ def eval_loss(model, loader, criterion, vocab_size, device, pad_id=0):
 </p>
 <br>
 
-### BLEU score
 
 
