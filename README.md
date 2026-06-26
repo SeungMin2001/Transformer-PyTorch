@@ -22,6 +22,25 @@ This implementation is based on the following paper:
 arXiv: https://arxiv.org/abs/1706.03762
 <br>
 
+## Implementation added
+
+The study notes below are now backed by runnable PyTorch code.
+
+- `src/transformer_pytorch/model.py`: token embedding, sinusoidal positional encoding, multi-head attention, feed-forward network, encoder layer, decoder layer, and full encoder-decoder Transformer.
+- `examples/toy_forward.py`: a tiny forward-pass example that verifies the expected `(batch, target_length, vocab_size)` output shape.
+- `tests/test_transformer.py`: focused tests for output shapes, positional encoding, and causal masking.
+
+```bash
+pip install -e ".[dev]"
+PYTHONPATH=src python examples/toy_forward.py
+PYTHONPATH=src pytest -q
+```
+
+The implementation keeps the learning flow from this README: embedding is scaled by
+`sqrt(d_model)`, positional encoding supplies sequence order, attention uses
+`QK^T / sqrt(d_k)`, the decoder uses a causal mask, and every block applies
+residual Add & Norm around attention and feed-forward layers.
+
 ---
 ## Step 1. Dataset
 
@@ -375,6 +394,5 @@ def eval_loss(model, loader, criterion, vocab_size, device, pad_id=0):
   <img src="assets/comparison.png" alt="Transformer Architecture">
 </p>
 <br>
-
 
 
