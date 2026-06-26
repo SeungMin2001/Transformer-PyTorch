@@ -9,6 +9,34 @@
   <em>Figure. Transformer Architecture</em>
 </p>
 
+## Overview
+
+This repository is a study-first implementation of the original Transformer
+architecture. The README keeps the learning notes I wrote while following the
+paper, and the `src/` directory turns those notes into reusable PyTorch modules.
+
+Key study points covered here:
+
+- token embedding scaling with `sqrt(d_model)`
+- sinusoidal positional encoding
+- scaled dot-product attention and multi-head attention
+- encoder self-attention, decoder masked self-attention, and encoder-decoder attention
+- residual connection, dropout, and LayerNorm
+- sequence-to-sequence training with teacher forcing
+
+## Table of Contents
+
+- [Paper Reference](#paper-reference)
+- [Runnable Implementation](#runnable-implementation)
+- [Study Notes](#study-notes)
+  - [Step 1. Dataset](#step-1-dataset)
+  - [Step 2. Tokenizer](#step-2-tokenizer)
+  - [Step 3. Embedding](#step-3-embedding)
+  - [Step 4. Attention](#step-4-attention)
+  - [Step 5. Feed-Forward Network](#step-5-feed-forward-network)
+  - [Step 6. Modeling](#step-6-modeling)
+  - [Step 7. Run](#step-7-run)
+  - [Step 8. Evaluate](#step-8-evaluate)
 
 ## Paper Reference
 
@@ -22,7 +50,7 @@ This implementation is based on the following paper:
 arXiv: https://arxiv.org/abs/1706.03762
 <br>
 
-## Implementation added
+## Runnable Implementation
 
 The study notes below are now backed by runnable PyTorch code.
 
@@ -42,6 +70,13 @@ The implementation keeps the learning flow from this README: embedding is scaled
 residual Add & Norm around attention and feed-forward layers.
 
 ---
+
+## Study Notes
+
+The following sections preserve the original learning notes and code snippets.
+They show how each component was understood before being organized into the
+runnable implementation above.
+
 ## Step 1. Dataset
 
 ```python
@@ -89,7 +124,7 @@ res=[k for k in train]
 <br>
 
 ---
-## Step 2. Embedding
+## Step 3. Embedding
 
 <p align="left">
   <img src="assets/embedding.jpg" alt="Transformer Architecture" width="550">
@@ -126,7 +161,7 @@ class TokenEmbedding(nn.Module):
 <br>
 
 ---
-## Step 3. Attention
+## Step 4. Attention
 
 <p align="left">
   <img src="assets/attention.png" alt="Transformer Architecture" width="550">
@@ -184,7 +219,7 @@ class Attention(nn.Module):
 
 ---
 
-## Step 4. FFW
+## Step 5. Feed-Forward Network
 
 <p align="left">
   <img src="assets/FFW.png" alt="Transformer Architecture" width="550">
@@ -221,7 +256,7 @@ class FeedForward(nn.Module):
 
 ---
 
-## Step 5. modeling
+## Step 6. Modeling
 nx=6 in paper <br>
 => encoding * 6, decoding * 6<br>
 
@@ -281,7 +316,7 @@ class transformer(nn.Module):
 
 ---
 
-## Step 6. Run
+## Step 7. Run
 
 ```py
 model=transformer()
@@ -387,12 +422,11 @@ def eval_loss(model, loader, criterion, vocab_size, device, pad_id=0):
 ```
 <br>
 
-## Step 7. Evaluate
+## Step 8. Evaluate
 
-### traing loss(train,valid) curve is
+### Training loss and validation loss curve
 <p align="center">
   <img src="assets/comparison.png" alt="Transformer Architecture">
 </p>
 <br>
-
 
