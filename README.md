@@ -1,64 +1,64 @@
 # Transformer (PyTorch)
 
 [🇰🇷 한국어](README.md) | [🇺🇸 English](README.en.md)
-> A PyTorch implementation of the Transformer built from scratch, based on **Attention Is All You Need**.
+> **Attention Is All You Need**를 기반으로 Transformer를 처음부터 구현한 PyTorch 프로젝트입니다.
 
 <br>
 <p align="left">
-  <img src="assets/transformer_architecture.jpg" alt="Transformer Architecture" width="350">
+  <img src="assets/transformer_architecture.jpg" alt="Transformer 아키텍처" width="350">
 </p>
 <p align="left">
-  <em>Figure. Transformer Architecture</em>
+  <em>그림. Transformer 아키텍처</em>
 </p>
 
-## Overview
+## 개요
 
-This repository is a study-first implementation of the original Transformer
-architecture. The README keeps the learning notes I wrote while following the
-paper, and the `src/` directory turns those notes into reusable PyTorch modules.
+이 저장소는 원본 Transformer 아키텍처를 학습 중심으로 구현한 프로젝트입니다.
+README에는 논문을 따라가며 작성한 학습 노트를 보존하고,
+`src/` 디렉터리에는 해당 노트를 재사용 가능한 PyTorch 모듈로 구현했습니다.
 
-Key study points covered here:
+주요 학습 내용:
 
-- token embedding scaling with `sqrt(d_model)`
-- sinusoidal positional encoding
-- scaled dot-product attention and multi-head attention
-- encoder self-attention, decoder masked self-attention, and encoder-decoder attention
-- residual connection, dropout, and LayerNorm
-- sequence-to-sequence training with teacher forcing
+- `sqrt(d_model)`을 사용한 토큰 임베딩 스케일링
+- 사인·코사인 위치 인코딩
+- 스케일드 닷 프로덕트 어텐션과 멀티헤드 어텐션
+- 인코더 셀프 어텐션, 디코더 마스크드 셀프 어텐션 및 인코더-디코더 어텐션
+- 잔차 연결, 드롭아웃 및 LayerNorm
+- teacher forcing을 사용한 시퀀스-투-시퀀스 학습
 
-## Table of Contents
+## 목차
 
-- [Paper Reference](#paper-reference)
-- [Runnable Implementation](#runnable-implementation)
-- [Study Notes](#study-notes)
-  - [Step 1. Dataset](#step-1-dataset)
-  - [Step 2. Tokenizer](#step-2-tokenizer)
-  - [Step 3. Embedding](#step-3-embedding)
-  - [Step 4. Attention](#step-4-attention)
-  - [Step 5. Feed-Forward Network](#step-5-feed-forward-network)
-  - [Step 6. Modeling](#step-6-modeling)
-  - [Step 7. Run](#step-7-run)
-  - [Step 8. Evaluate](#step-8-evaluate)
+- [논문 참고 자료](#논문-참고-자료)
+- [실행 가능한 구현](#실행-가능한-구현)
+- [학습 노트](#학습-노트)
+  - [1단계. 데이터셋](#1단계-데이터셋)
+  - [2단계. 토크나이저](#2단계-토크나이저)
+  - [3단계. 임베딩](#3단계-임베딩)
+  - [4단계. 어텐션](#4단계-어텐션)
+  - [5단계. 피드포워드 네트워크](#5단계-피드포워드-네트워크)
+  - [6단계. 모델링](#6단계-모델링)
+  - [7단계. 실행](#7단계-실행)
+  - [8단계. 평가](#8단계-평가)
 
-## Paper Reference
+## 논문 참고 자료
 
-This implementation is based on the following paper:
+이 구현은 다음 논문을 기반으로 합니다.
 
 > **Attention Is All You Need**  
 > Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit,  
 > Llion Jones, Aidan N. Gomez, Łukasz Kaiser, Illia Polosukhin  
-> *Advances in Neural Information Processing Systems (NeurIPS), 2017*
+> *신경정보처리시스템학회(NeurIPS), 2017*
 
 arXiv: https://arxiv.org/abs/1706.03762
 <br>
 
-## Runnable Implementation
+## 실행 가능한 구현
 
-The study notes below are now backed by runnable PyTorch code.
+아래 학습 노트는 이제 실행 가능한 PyTorch 코드로 구현되어 있습니다.
 
-- `src/transformer_pytorch/model.py`: token embedding, sinusoidal positional encoding, multi-head attention, feed-forward network, encoder layer, decoder layer, and full encoder-decoder Transformer.
-- `examples/toy_forward.py`: a tiny forward-pass example that verifies the expected `(batch, target_length, vocab_size)` output shape.
-- `tests/test_transformer.py`: focused tests for output shapes, positional encoding, and causal masking.
+- `src/transformer_pytorch/model.py`: 토큰 임베딩, 사인·코사인 위치 인코딩, 멀티헤드 어텐션, 피드포워드 네트워크, 인코더 레이어, 디코더 레이어 및 전체 인코더-디코더 Transformer.
+- `examples/toy_forward.py`: 예상되는 `(batch, target_length, vocab_size)` 출력 형태를 검증하는 작은 forward-pass 예제.
+- `tests/test_transformer.py`: 출력 형태, 위치 인코딩 및 causal masking에 초점을 맞춘 테스트.
 
 ```bash
 pip install -e ".[dev]"
@@ -66,20 +66,20 @@ PYTHONPATH=src python examples/toy_forward.py
 PYTHONPATH=src pytest -q
 ```
 
-The implementation keeps the learning flow from this README: embedding is scaled by
-`sqrt(d_model)`, positional encoding supplies sequence order, attention uses
-`QK^T / sqrt(d_k)`, the decoder uses a causal mask, and every block applies
-residual Add & Norm around attention and feed-forward layers.
+이 구현은 README의 학습 흐름을 유지합니다. 임베딩은 `sqrt(d_model)`로
+스케일링하고, 위치 인코딩은 시퀀스 순서를 제공하며, 어텐션은
+`QK^T / sqrt(d_k)`를 사용합니다. 디코더는 causal mask를 사용하고,
+모든 블록은 어텐션과 피드포워드 레이어 주위에 잔차 Add & Norm을 적용합니다.
 
 ---
 
-## Study Notes
+## 학습 노트
 
-The following sections preserve the original learning notes and code snippets.
-They show how each component was understood before being organized into the
-runnable implementation above.
+다음 섹션에는 원본 학습 노트와 코드 조각을 보존했습니다.
+위의 실행 가능한 구현으로 구성하기 전에 각 구성 요소를 어떻게
+이해했는지 보여줍니다.
 
-## Step 1. Dataset
+## 1단계. 데이터셋
 
 ```python
 #data 로드
@@ -94,8 +94,8 @@ train_de=train['de']
 <br>
 
 ---
-## Step 2. Tokenizer
-I use Hugging Face Transformers – AutoTokenizer
+## 2단계. 토크나이저
+Hugging Face Transformers의 AutoTokenizer를 사용합니다.
 
 ```py
 # tokenizer 설정
@@ -126,13 +126,13 @@ res=[k for k in train]
 <br>
 
 ---
-## Step 3. Embedding
+## 3단계. 임베딩
 
 <p align="left">
-  <img src="assets/embedding.jpg" alt="Transformer Architecture" width="550">
+  <img src="assets/embedding.jpg" alt="Transformer 아키텍처" width="550">
 </p>
 <br>
-embedding + positional encoding
+임베딩 + 위치 인코딩
 <br>
 
 ```py
@@ -163,15 +163,15 @@ class TokenEmbedding(nn.Module):
 <br>
 
 ---
-## Step 4. Attention
+## 4단계. 어텐션
 
 <p align="left">
-  <img src="assets/attention.png" alt="Transformer Architecture" width="550">
+  <img src="assets/attention.png" alt="Transformer 아키텍처" width="550">
 </p>
 <br>
 
-attention in encoding, attention in decoding, encoding+decoding attention in decoding <br>
-(B,T,d_model) -> (B,T,d_model) same dimention
+인코딩 어텐션, 디코딩 어텐션, 디코딩의 인코딩+디코딩 어텐션 <br>
+(B,T,d_model) -> (B,T,d_model) 동일한 차원
 <br>
 
 ```py
@@ -221,14 +221,14 @@ class Attention(nn.Module):
 
 ---
 
-## Step 5. Feed-Forward Network
+## 5단계. 피드포워드 네트워크
 
 <p align="left">
-  <img src="assets/FFW.png" alt="Transformer Architecture" width="550">
+  <img src="assets/FFW.png" alt="Transformer 아키텍처" width="550">
 </p><br>
 
 FeedForward 512->2048->512 <br>
-I use ReLU of activate function
+활성화 함수로 ReLU를 사용합니다.
 <br>
 
 ```py
@@ -258,9 +258,9 @@ class FeedForward(nn.Module):
 
 ---
 
-## Step 6. Modeling
-nx=6 in paper <br>
-=> encoding * 6, decoding * 6<br>
+## 6단계. 모델링
+논문에서 nx=6 <br>
+=> 인코딩 * 6, 디코딩 * 6<br>
 
 ```py
 class transformer(nn.Module):
@@ -318,7 +318,7 @@ class transformer(nn.Module):
 
 ---
 
-## Step 7. Run
+## 7단계. 실행
 
 ```py
 model=transformer()
@@ -393,7 +393,7 @@ for i in range(epoch):
 ```
 
 
-### valid loss function
+### 검증 손실 함수
 ```py
 criterion=nn.CrossEntropyLoss(ignore_index=0)
 
@@ -424,10 +424,10 @@ def eval_loss(model, loader, criterion, vocab_size, device, pad_id=0):
 ```
 <br>
 
-## Step 8. Evaluate
+## 8단계. 평가
 
-### Training loss and validation loss curve
+### 학습 손실 및 검증 손실 곡선
 <p align="center">
-  <img src="assets/comparison.png" alt="Transformer Architecture">
+  <img src="assets/comparison.png" alt="Transformer 아키텍처">
 </p>
 <br>
